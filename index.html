@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+        content="width=device-width,initial-scale=1.0">
+        <title>Fashion Store</title>
+        <style>
+            body{
+                font-family:Arial,sans-serif
+                margin:0;
+                padding:0
+                background: color #f8f8f8;
+            }
+            .container{
+                width:90%
+                margin:auto
+            }
+            .section{
+                padding: 40px;
+                text-align: center;
+            }
+            .grid{
+                display:flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+            .grid.soulful{
+                display: grid;
+                grid-template-columns: repeat(4,1fr);
+                gap: 20px;;
+            }
+            .grid.categories{
+                display: grid;
+                grid-template-columns: repeat(3,1fr);
+                gap: 20px;;
+            }
+            .grid img{
+                width: 250px;
+                height: 250px;
+                object-fit: cover;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+            ,membership p{
+                margin: 10px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <section class="section"
+            <h2> Soulful Bestsellers</h2>
+            <div class="grid soulful">
+                <img src="http://placehold.co/300x300"
+                alt="Product 1">
+                <img src="http://placehold.co/300x300"
+                alt="Product 2">
+                <img src="http://placehold.co/300x300"
+                alt="Product 3">
+                <img src="http://placehold.co/300x300"
+                alt="Product 4">
+        </div>
+    </section>
+    <section class="section">
+        <h2>Categories</h2>
+        <div class="grid categories">
+          <img src="http://placehold.co/300x300"
+          alt="Tops">
+          <img src="http://placehold.co/300x300"
+          alt="Bottomwear">
+          <img src="http://placehold.co/300x300"
+          alt="Shoes">
+        </div>
+    </section>
+    <section class="section">
+        <h2>Shop by Themes</h2>
+        <div class="grid">
+            <img src="http://placehold.co/300x300"
+          alt="TSS Originals">
+          <img src="http://placehold.co/300x300"
+          alt="Retro Vibes">
+          <img src="http://placehold.co/300x300"
+          alt="Street Style">
+          <img src="http://placehold.co/300x300"
+          alt="Boho Chic">
+        </div>
+    </section>
+    <section class="section">
+    <h2>Why Choose Us?</h2>
+    <p>15+ Years|50+ Stores | 100+ Styles | 5 Lacs+ Happy Customers</p>
+
+    </section>
+        </div>
+        <section class="membership">
+            <h2>Membership Perks</h2>
+            <p>Big Discounts|Early Access | Exclusive Rewards | Member Wednesdays|Priority Shipping|Birthday Benifits</p>
+        </section>
+    </body>
+</html>
