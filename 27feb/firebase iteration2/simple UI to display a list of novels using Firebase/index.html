@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novels List</title>
+  <!-- Add Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.8.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.8.0/firebase-firestore.js"></script>
+</head>
+<body>
+  <h1>Novels List</h1>
+  <!-- Search bar -->
+  <input type="text" id="searchInput" placeholder="Search for novels..." />
+  
+  <!-- Filter by year -->
+  <label for="yearFilter">Filter by Year: </label>
+  <select id="yearFilter">
+    <option value="">All</option>
+    <option value="2019">2019</option>
+    <option value="2020">2020</option>
+    <option value="2021">2021</option>
+    <option value="2022">2022</option>
+  </select>
+  
+  <!-- Sort by price -->
+  <button id="sortAsc">Sort by Price (Asc)</button>
+  <button id="sortDesc">Sort by Price (Desc)</button>
+
+  <!-- Table to display novels -->
+  <table id="novelsTable">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Price</th>
+        <th>Release Year</th>
+        <th>Genre</th>
+      </tr>
+    </thead>
+    <tbody id="novelsList"></tbody>
+  </table>
+
+  <script src="script.js"></script>
+</body>
+</html>
