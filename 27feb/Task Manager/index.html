@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task Manager</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h2 {
+      text-align: center;
+    }
+    #taskForm {
+      max-width: 600px;
+      margin: 0 auto 20px;
+      display: flex;
+      gap: 10px;
+    }
+    #taskForm input, #taskForm select {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+    }
+    #taskForm button {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    #taskList {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .task {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .task.completed {
+      background-color: #e0ffe0;
+    }
+    .task.pending {
+      background-color: #ffe0e0;
+    }
+    .task-actions button {
+      margin-left: 5px;
+    }
+    #message {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 18px;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Task Manager</h2>
+
+  <form id="taskForm">
+    <input type="text" id="newTitle" placeholder="Task Title" required />
+    <select id="newStatus">
+      <option value="Pending">Pending</option>
+      <option value="Completed">Completed</option>
+    </select>
+    <button type="submit">Add Task</button>
+  </form>
+
+  <div id="message"></div>
+
+  <div id="taskList">
+    <!-- Tasks will be listed here -->
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
