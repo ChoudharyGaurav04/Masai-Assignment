@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add User to Firebase</title>
+  <style>
+    form {
+      width: 300px;
+      margin: 50px auto;
+      display: flex;
+      flex-direction: column;
+    }
+    input, button {
+      margin-bottom: 10px;
+      padding: 8px;
+      font-size: 16px;
+    }
+    #message {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<h2 style="text-align: center;">Add New User</h2>
+
+<form id="userForm">
+  <input type="text" id="name" placeholder="Enter name" required />
+  <input type="email" id="email" placeholder="Enter email" required />
+  <button type="submit">Add User</button>
+</form>
+
+<p id="message"></p>
+
+<script>
+  // Replace with your Firebase Realtime Database URL
+  const databaseURL = 'https://your-project-id.firebaseio.com/users.json';
+
+  const form = document.getElementById('userForm');
+  const message = document.getElementById('message');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+
+    if (name === '' || email === '') {
+      message.style.color = 'red';
+      message.textContent = 'Please fill out all fields.';
+      return;
+    }
+
+    const userData = { name, email };
+
+    try {
+      const response = await fetch(databaseURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add user');
+      }
+
+      form.reset();
+      message.style.color = 'green';
+      message.textContent = 'User added successfully!';
+    } catch (error) {
+      message.style.color = 'red';
+      message.textContent = 'Error adding user: ' + error.message;
+    }
+  });
+</script>
+
+</body>
+</html>

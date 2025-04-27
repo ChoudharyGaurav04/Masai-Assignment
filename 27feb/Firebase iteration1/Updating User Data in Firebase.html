@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit User in Firebase</title>
+  <style>
+    table {
+      width: 60%;
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #999;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    form {
+      width: 300px;
+      margin: 20px auto;
+      display: flex;
+      flex-direction: column;
+    }
+    input, button {
+      margin-bottom: 10px;
+      padding: 8px;
+      font-size: 16px;
+    }
+    #message {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<h2 style="text-align: center;">Users List</h2>
+
+<table id="usersTable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- User rows will go here -->
+  </tbody>
+</table>
+
+<!-- Hidden Edit Form -->
+<form id="editForm" style="display: none;">
+  <h3 style="text-align: center;">Edit User</h3>
+  <input type="text" id="editName" placeholder="Name" required />
+  <input type="email" id="editEmail" placeholder="Email" required />
+  <button type="submit">Update User</button>
+</form>
+
+<p id="message"></p>
+
+<script>
+  // Replace with your Firebase Realtime Database URL
+  const baseDatabaseURL = 'https://your-project-id.firebaseio.com/users';
+  
+  const usersTableBody = document.querySelector('#usersTable tbody');
+  const editForm = document.getElementById('editForm');
+  const editName = document.getElementById('editName');
+  const editEmail = document.getElementById('editEmail');
+  const message = document.getElementById('message');
+
+  let currentEditingUserId = null;
+
+  // Fetch and display users
+  async function fetchUsers() {
+    usersTableBody.innerHTML = ''; // Clear previous table
+    try {
+      const response = await fetch(`${baseDatabaseURL}.json`);
+      const data = await response.json();
+
+      if (data) {
+        Object.entries(data).forEach(([id, user]) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${user.name}</td>
+            <td>${user.email}</td>
+            <td>
+              <button onclick="openEditForm('${id}', '${user.name}', '${user.email}')">Edit</button>
+            </td>
+          `;
+          usersTableBody.appendChild(row);
+        });
+      } else {
+        usersTableBody.innerHTML = '<tr><td colspan="3" style="text-align:center;">No users found.</td></tr>';
+      }
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      message.style.color = 'red';
+      message.textContent = 'Error loading users: ' + error.message;
+    }
+  }
+
+  // Open edit form with pre-filled data
+  function openEditForm(id, name, email) {
+    currentEditingUserId = id;
+    editName.value = name;
+    editEmail.value = email;
+    editForm.style.display = 'block';
+    message.textContent = '';
+    window.scrollTo(0, document.body.scrollHeight); // Scroll down to the form
+  }
+
+  // Handle form submission to update user
+  editForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const updatedUser = {
+      name: editName.value.trim(),
+      email: editEmail.value.trim()
+    };
+
+    try {
+      const response = await fetch(`${baseDatabaseURL}/${currentEditingUserId}.json`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedUser),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update user');
+      }
+
+      message.style.color = 'green';
+      message.textContent = 'User updated successfully!';
+      editForm.style.display = 'none';
+      fetchUsers(); // Refresh table
+    } catch (error) {
+      console.error('Error updating user:', error);
+      message.style.color = 'red';
+      message.textContent = 'Error updating user: ' + error.message;
+    }
+  });
+
+  // Initial fetch
+  fetchUsers();
+</script>
+
+</body>
+</html>

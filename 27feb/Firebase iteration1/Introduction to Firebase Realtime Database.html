@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Firebase Users List</title>
+  <style>
+    table {
+      width: 50%;
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #999;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    #error {
+      color: red;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<h2 style="text-align: center;">List of Users</h2>
+
+<table id="usersTable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- User rows will be inserted here -->
+  </tbody>
+</table>
+
+<p id="error"></p>
+
+<script>
+  // Replace with your Firebase Realtime Database URL
+  const databaseURL = 'https://your-project-id.firebaseio.com/users.json';
+
+  async function fetchUsers() {
+    try {
+      const response = await fetch(databaseURL);
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      const data = await response.json();
+      const tbody = document.querySelector('#usersTable tbody');
+
+      if (data) {
+        Object.values(data).forEach(user => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${user.name}</td>
+            <td>${user.email}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      } else {
+        document.getElementById('error').textContent = 'No users found.';
+      }
+    } catch (error) {
+      document.getElementById('error').textContent = 'Error fetching users: ' + error.message;
+    }
+  }
+
+  fetchUsers();
+</script>
+
+</body>
+</html>
